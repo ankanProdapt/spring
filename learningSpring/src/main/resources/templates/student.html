@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Student Table</title>
+	<style>
+		/* Add a style tag inside the head tag of your HTML code */
+
+		/* Use a font-family of Arial for the whole document */
+		body {
+			font-family: Arial;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+		}
+
+		/* Use a light gray background color for the table */
+		table {
+			background-color: antiquewhite;
+		}
+
+		/* Use a black border around the table and each cell */
+		table,
+		th,
+		td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+
+		/* Use a padding of 10px for each cell */
+		th,
+		td {
+			padding: 10px;
+			width: 100px;
+			align-items: center;
+		}
+
+		/* Use a red color for the table headings */
+		th {
+			color: green;
+		}
+	</style>
+
+</head>
+
+<body>
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Rank</th>
+			<th>Name</th>
+			<th>Score</th>
+			<th>Delete</td>
+			<th>Edit</th>
+		</tr>
+		<tr th:each="student: ${students}">
+			<td th:text="${student.id}"></td>
+			<td th:text="${student.rank}"></td>
+			<td th:text="${student.name}"></td>
+			<td th:text="${student.score}"></td>
+			<td>
+				<form action="student/delete" method="post">
+					<input name="studentId" hidden="true" type="number" th:value="${student.id}">
+					<input name="delete" type="submit" value="Delete">
+				</form>
+			</td>
+			<td>
+				<button name="Edit" onclick="toggleForm(this)">Edit</button>
+				<form action="student/update" method="post" hidden="true.">
+					<input name="studentId" hidden="true" type="number" th:value="${student.id}">
+					<input name="studentEditedName" type="text" th:value="${student.name}">
+					<input name="studentEditedScore" type="number" th:value="${student.score}">
+					<input name="update" type="submit" value="Update">
+				</form>
+			</td>
+		</tr>
+	</table>
+	<form action="student/add" method="post">
+		<h3>Add a student</h3>
+		<label for="name">Name:</label>
+		<br>
+		<input type="text" id="name" name="name">
+		<br>
+		<label for="score">Score:</label>
+		<br>
+		<input type="number" id="score" name="score">
+		<br>
+		<br>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+
+<script>
+	function toggleForm(e) {
+		e.nextSibling.nextSibling.hidden = !e.nextSibling.nextSibling.hidden;
+	}
+</script>
+
+</html>
